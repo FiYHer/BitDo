@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+.vs
+Debug
+*.obj
+*.log
+*.enc
+*.idb
+*.pdb
+*.exe
+*.ilk
