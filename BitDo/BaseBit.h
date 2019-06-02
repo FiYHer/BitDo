@@ -94,11 +94,11 @@ public:
 	/*
 	从哪里加载
 	*/
-	virtual BOOL LoadBitInfo(PBitInfo pBit) = 0;
+	virtual BOOL LoadBitInfo(PBitInfo pBit);
 
 	/*
 	复制到哪里
 	*/
-	virtual BOOL BitInfoTo(PBitInfo pBit) = 0;
+	virtual PBitInfo GetBitInfo();
 };
 

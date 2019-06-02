@@ -1,12 +1,12 @@
 #pragma once
 
+#include <math.h>
 #include "BaseBit.h"
 
-class GrayTran :public BaseBit
+class AreaDetect:public BaseBit
 {
 private:
-	BitInfo m_stBit_New;//位图结构体
-	LPRGBQUAD m_pRgb;//调色板指针
+	BitInfo m_stBit_New;
 
 private:
 	/*
@@ -14,10 +14,6 @@ private:
 	*/
 	BOOL ReplaceBitBuffer(CONST LPBYTE pBit,
 		LPRGBQUAD pRGB = nullptr);
-
-public:
-	GrayTran();
-	~GrayTran();
 
 public:
 	/*
@@ -37,27 +33,18 @@ public:
 
 	virtual BOOL LoadBitInfo(PBitInfo pBit);
 	virtual PBitInfo GetBitInfo();
+
+public:
+	AreaDetect();
+	~AreaDetect();
+
 public:
 	/*
-	二值化
+	Roberts边缘检测
 	*/
-	VOID Binarization(INT nThreshold = 100);
+	VOID Roberts();
 
-	/*
-	RGB位图转灰度图
-	*/
-	VOID ColorToGray();
 
-	/*
-	颜色反转
-	*/
-	VOID Reverse();
 
-	/*
-	阈值界定的窗口的变换
-	*/
-	VOID ThresholdWindowTran(INT nTop = 200, 
-		INT nDown = 100);
 
 };
-

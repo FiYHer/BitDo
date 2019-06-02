@@ -32,7 +32,7 @@ public:
 	BOOL DrawBit(HDC hDc);
 
 	virtual BOOL LoadBitInfo(PBitInfo pBit);
-	virtual BOOL BitInfoTo(PBitInfo pBit);
+	virtual PBitInfo GetBitInfo();
 public:
 	Geometry();
 	~Geometry();

@@ -314,6 +314,46 @@ VOID GrayTran::Reverse()
 	ReplaceBitBuffer(pBuffer);
 }
 
+VOID GrayTran::ThresholdWindowTran(INT nTop /*= 200*/, INT nDown /*= 100*/)
+{
+	//获取源位图数据
+	if (!m_stBit_New.pBuf)
+		if (!AgainCopyBitInfo())
+			return;
+
+	INT nWidthIn = m_stBit_New.pBitInfo->biWidth;
+	INT nHeightIn = m_stBit_New.pBitInfo->biHeight;
+	INT nBitCountIn = m_stBit_New.pBitInfo->biBitCount;
+	INT nPiexlByteIn = nBitCountIn / 8;
+	INT nLineByteIn = (nWidthIn*nBitCountIn / 8 + 3) / 4 * 4;
+
+	LPBYTE pBuffer = AllocBuf(nWidthIn, nHeightIn, nBitCountIn);
+	if (!pBuffer)
+		return;
+
+	CopyMemory(pBuffer, m_stBit_New.pBuf, m_stBit_New.pBitInfo->biSizeImage);
+
+	INT nRowTo, nColumnTo;
+	for (INT i = NULL; i < nHeightIn; i++)
+	{
+		for (INT j = NULL; j < nWidthIn; j++)
+		{
+			nRowTo = i * nLineByteIn;
+			nColumnTo = j * nPiexlByteIn;
+
+			for (INT n = NULL; n < nPiexlByteIn; n++)
+			{
+				if (pBuffer[nRowTo + nColumnTo + n] < nDown)
+					pBuffer[nRowTo + nColumnTo + n] = 0;
+				else if (pBuffer[nRowTo + nColumnTo + n] > nTop)
+					pBuffer[nRowTo + nColumnTo + n] = 255;
+
+			}
+		}
+	}
+	ReplaceBitBuffer(pBuffer);
+}
+
 BOOL GrayTran::DrawBit(HDC hDc)
 {
 	if (m_stBit_New.pBitmap)
@@ -330,10 +370,26 @@ BOOL GrayTran::WriteBit(CONST CHAR* szBitPath)
 
 BOOL GrayTran::LoadBitInfo(PBitInfo pBit)
 {
+	if (!pBit)
+		return FALSE;
+
+	ClearBitInfo(&m_stBit_New);
+
+	//总大小
+	INT nSize = pBit->pBitFile->bfOffBits + pBit->pBitInfo->biSizeImage;
+
+	LPBYTE pBuffer = (LPBYTE)VirtualAlloc(NULL, nSize, MEM_COMMIT, PAGE_READWRITE);
+	if (!pBuffer)
+		return FALSE;
+
+	//总数据的复制
+	CopyMemory(pBuffer, pBit->pBitmap, nSize);
+	m_stBit_New.pBitmap = pBuffer;
+	InitBitInfo(&m_stBit_New);
 	return TRUE;
 }
 
-BOOL GrayTran::BitInfoTo(PBitInfo pBit)
+PBitInfo GrayTran::GetBitInfo()
 {
-	return TRUE;
+	return &m_stBit_New;
 }

@@ -104,13 +104,30 @@ BOOL Geometry::DrawBit(HDC hDc)
 
 BOOL Geometry::LoadBitInfo(PBitInfo pBit)
 {
+	if (!pBit)
+		return FALSE;
+
+	ClearBitInfo(&m_stBit_New);
+
+	//总大小
+	INT nSize = pBit->pBitFile->bfOffBits + pBit->pBitInfo->biSizeImage;
+
+	LPBYTE pBuffer = (LPBYTE)VirtualAlloc(NULL, nSize, MEM_COMMIT, PAGE_READWRITE);
+	if (!pBuffer)
+		return FALSE;
+
+	//总数据的复制
+	CopyMemory(pBuffer, pBit->pBitmap, nSize);
+	m_stBit_New.pBitmap = pBuffer;
+	InitBitInfo(&m_stBit_New);
 	return TRUE;
 }
 
-BOOL Geometry::BitInfoTo(PBitInfo pBit)
+PBitInfo Geometry::GetBitInfo()
 {
-	return TRUE;
+	return &m_stBit_New;
 }
+
 
 VOID Geometry::Move(INT nX, INT nY)
 {

@@ -115,12 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AreaDetect.cpp" />
     <ClCompile Include="BaseBit.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GrayTran.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AreaDetect.h" />
     <ClInclude Include="BaseBit.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GrayTran.h" />

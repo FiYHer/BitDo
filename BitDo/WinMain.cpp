@@ -3,20 +3,22 @@
 #include "BaseBit.h"
 #include "Geometry.h"
 #include "GrayTran.h"
+#include "AreaDetect.h"
 
-GrayTran g_Bit;
+AreaDetect g_Bit;
 
 HRESULT CALLBACK _Proc(HWND hWnd, UINT uMsg, WPARAM wPara, LPARAM lParam)
 {
 	static HDC hDc = NULL;
 	static PAINTSTRUCT stPs = { 0 };
+	static int nIndex = 0;
 	switch (uMsg)
 	{
 	case WM_CREATE:
 		g_Bit.ReadBit("H:\\test.bmp");
 		break;
 	case WM_LBUTTONDOWN:
-		g_Bit.Reverse();
+		g_Bit.Roberts();
 		InvalidateRect(hWnd, NULL, FALSE);
 		break;
 	case WM_RBUTTONDOWN:

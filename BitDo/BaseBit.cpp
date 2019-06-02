@@ -93,6 +93,32 @@ VOID BaseBit::InitBitInfo(PBitInfo pBit,
 	pBit->pBuf = pBitmap + SIZE__OFBITS(nColorTable);
 }
 
+BOOL BaseBit::LoadBitInfo(PBitInfo pBit)
+{
+	if (!pBit)
+		return FALSE;
+
+	ClearBitInfo(&m_pBit);
+
+	//总大小
+	INT nSize = pBit->pBitFile->bfOffBits + pBit->pBitInfo->biSizeImage;
+
+	LPBYTE pBuffer = (LPBYTE)VirtualAlloc(NULL, nSize, MEM_COMMIT, PAGE_READWRITE);
+	if (!pBuffer)
+		return FALSE;
+
+	//总数据的复制
+	CopyMemory(pBuffer, pBit->pBitmap, nSize);
+	m_pBit.pBitmap = pBuffer;
+	InitBitInfo(&m_pBit);
+	return TRUE;
+}
+
+PBitInfo BaseBit::GetBitInfo()
+{
+	return &m_pBit;
+}
+
 BOOL BaseBit::ReadBit(CONST CHAR* szBitPath)
 {
 	BOOL bStatu = FALSE;

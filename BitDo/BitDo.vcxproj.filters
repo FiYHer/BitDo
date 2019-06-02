@@ -22,6 +22,9 @@
     <Filter Include="GrayTran">
       <UniqueIdentifier>{9ceccb41-0fdf-46a3-8fab-c8c74c6e6021}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AreaDetect">
+      <UniqueIdentifier>{a22bf12d-f27d-4518-926a-f906ce65350d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="GrayTran.cpp">
       <Filter>GrayTran</Filter>
     </ClCompile>
+    <ClCompile Include="AreaDetect.cpp">
+      <Filter>AreaDetect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseBit.h">
@@ -46,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="GrayTran.h">
       <Filter>GrayTran</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaDetect.h">
+      <Filter>AreaDetect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
